@@ -1,0 +1,2627 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08080d">
+<title>Dla Ciebie ❤️</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#07070b;
+    --border:rgba(255,255,255,.13);
+    --text:#fff;
+    --muted:#a8a8b3;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#07070b;
+    color:white;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+button,input{
+    font-family:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* =========================
+   TŁO
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:-20%;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(255,100,145,.14),transparent 28%),
+        radial-gradient(circle at 80% 30%,rgba(160,90,255,.13),transparent 30%),
+        radial-gradient(circle at 50% 90%,rgba(255,70,120,.08),transparent 28%);
+    filter:blur(40px);
+    animation:bgMove 14s ease-in-out infinite alternate;
+    pointer-events:none;
+}
+
+@keyframes bgMove{
+    from{transform:scale(1)}
+    to{transform:scale(1.15) translate(-2%,2%)}
+}
+
+/* =========================
+   EKRAN BLOKADY
+========================= */
+
+#lockScreen{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    overflow:hidden;
+    background:
+        linear-gradient(to bottom,rgba(0,0,0,.08),rgba(0,0,0,.72)),
+        url("https://cdn.discordapp.com/attachments/1552699591588192326/1553772046994116789/99b12266983985b821e69e56413ed67c.jpg?ex=6aba767b&is=6ab924fb&hm=15488f5d0df0559845fdb27f6838744a3efeae9577fe07a68903aa5864d090ff&")
+        center/cover no-repeat;
+    transition:opacity 1s ease,transform 1s ease;
+}
+
+#lockScreen.hide{
+    opacity:0;
+    transform:scale(1.06);
+    pointer-events:none;
+}
+
+.lock-overlay{
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(circle at center,transparent 15%,rgba(0,0,0,.22) 70%),
+        linear-gradient(to bottom,rgba(0,0,0,.15),rgba(0,0,0,.65));
+}
+
+.lock-content{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding-top:11vh;
+    text-align:center;
+}
+
+.lock-time{
+    font-size:clamp(64px,11vw,130px);
+    font-weight:200;
+    letter-spacing:-5px;
+    line-height:.9;
+    text-shadow:0 10px 40px rgba(0,0,0,.45);
+}
+
+.lock-date{
+    margin-top:18px;
+    color:rgba(255,255,255,.88);
+    font-size:clamp(16px,2vw,22px);
+}
+
+.lock-message{
+    margin-top:auto;
+    margin-bottom:10vh;
+    animation:breathe 2.5s ease-in-out infinite;
+    cursor:pointer;
+}
+
+.lock-icon{
+    width:62px;
+    height:62px;
+    margin:auto auto 17px;
+    border-radius:22px;
+    display:grid;
+    place-items:center;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.2);
+    backdrop-filter:blur(18px);
+    font-size:27px;
+}
+
+.lock-message strong{
+    display:block;
+    font-size:18px;
+}
+
+.lock-message span{
+    display:block;
+    margin-top:7px;
+    color:rgba(255,255,255,.7);
+    font-size:14px;
+}
+
+@keyframes breathe{
+    0%,100%{transform:translateY(0);opacity:.8}
+    50%{transform:translateY(-7px);opacity:1}
+}
+
+/* =========================
+   LOGOWANIE
+========================= */
+
+#loginScreen{
+    position:fixed;
+    inset:0;
+    z-index:90;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(circle at 50% 30%,rgba(255,92,135,.13),transparent 30%),
+        #08080d;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .8s ease;
+}
+
+#loginScreen.show{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.login-card{
+    width:min(440px,calc(100% - 35px));
+    padding:38px;
+    border-radius:30px;
+    background:rgba(18,18,25,.76);
+    border:1px solid var(--border);
+    backdrop-filter:blur(30px);
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
+    text-align:center;
+    animation:cardIn .8s cubic-bezier(.16,1,.3,1);
+}
+
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:translateY(30px) scale(.96);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.login-avatar{
+    width:84px;
+    height:84px;
+    margin:0 auto 22px;
+    border-radius:27px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,rgba(255,111,145,.25),rgba(184,108,255,.25));
+    border:1px solid rgba(255,255,255,.14);
+    font-size:40px;
+}
+
+.login-card h1{
+    font-size:28px;
+}
+
+.login-card .sub{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.riddles{
+    margin:25px 0 18px;
+    display:grid;
+    gap:8px;
+}
+
+.riddle{
+    padding:11px 14px;
+    border-radius:13px;
+    background:rgba(255,255,255,.045);
+    color:#d8d8df;
+    font-size:13px;
+    text-align:left;
+}
+
+.password-wrap{
+    position:relative;
+    margin-top:18px;
+}
+
+.password-wrap input{
+    width:100%;
+    height:53px;
+    padding:0 52px 0 17px;
+    border:1px solid rgba(255,255,255,.11);
+    border-radius:16px;
+    outline:none;
+    background:rgba(255,255,255,.055);
+    color:white;
+    font-size:15px;
+}
+
+.password-wrap input:focus{
+    border-color:rgba(255,111,145,.55);
+    box-shadow:0 0 0 4px rgba(255,111,145,.08);
+}
+
+.password-wrap button{
+    position:absolute;
+    right:7px;
+    top:7px;
+    width:39px;
+    height:39px;
+    border-radius:12px;
+    background:rgba(255,255,255,.08);
+    color:white;
+}
+
+.login-button{
+    width:100%;
+    height:53px;
+    margin-top:12px;
+    border-radius:16px;
+    color:white;
+    font-weight:700;
+    font-size:15px;
+    background:linear-gradient(135deg,#ff638a,#a765ff);
+    box-shadow:0 12px 35px rgba(255,90,140,.2);
+    transition:.25s;
+}
+
+.login-button:hover{
+    transform:translateY(-2px);
+}
+
+.login-error{
+    min-height:20px;
+    margin-top:10px;
+    color:#ff7e9d;
+    font-size:13px;
+}
+
+/* =========================
+   DESKTOP
+========================= */
+
+#desktop{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    opacity:0;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at 20% 15%,rgba(255,95,140,.12),transparent 28%),
+        radial-gradient(circle at 80% 20%,rgba(125,85,255,.1),transparent 30%),
+        linear-gradient(135deg,#0a0a0f,#0e0d14 50%,#09090d);
+    transition:opacity .8s ease;
+}
+
+#desktop.show{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.desktop-noise{
+    position:absolute;
+    inset:0;
+    opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+    pointer-events:none;
+}
+
+.desktop-glow{
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(255,91,139,.11),transparent 68%);
+    top:-220px;
+    left:-120px;
+}
+
+.desktop-clock{
+    position:absolute;
+    right:38px;
+    top:30px;
+    text-align:right;
+    z-index:2;
+}
+
+.desktop-clock .time{
+    font-size:32px;
+    font-weight:300;
+}
+
+.desktop-clock .date{
+    color:#9b9ba7;
+    margin-top:4px;
+    font-size:13px;
+}
+
+/* =========================
+   APLIKACJE
+========================= */
+
+.apps{
+    position:absolute;
+    left:38px;
+    top:36px;
+    display:grid;
+    grid-template-columns:repeat(2,92px);
+    gap:28px 22px;
+    z-index:5;
+}
+
+.app{
+    width:92px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(18px) scale(.88);
+    pointer-events:none;
+}
+
+.app.visible{
+    animation:appIn .65s cubic-bezier(.16,1,.3,1) forwards;
+    pointer-events:auto;
+}
+
+@keyframes appIn{
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.app-button{
+    width:66px;
+    height:66px;
+    margin:auto;
+    border-radius:20px;
+    display:grid;
+    place-items:center;
+    background:rgba(255,255,255,.075);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(20px);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+    font-size:28px;
+    transition:.25s;
+}
+
+.app:hover .app-button{
+    transform:translateY(-5px) scale(1.05);
+    background:rgba(255,255,255,.12);
+}
+
+.app-name{
+    margin-top:9px;
+    color:#dedee4;
+    font-size:12px;
+}
+
+/* =========================
+   OKNA
+========================= */
+
+.window{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:min(720px,calc(100% - 35px));
+    max-height:min(760px,calc(100% - 100px));
+    transform:translate(-50%,-46%) scale(.92);
+    opacity:0;
+    pointer-events:none;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:25px;
+    background:rgba(16,16,23,.84);
+    backdrop-filter:blur(35px);
+    box-shadow:0 40px 100px rgba(0,0,0,.55);
+    transition:.4s cubic-bezier(.16,1,.3,1);
+    z-index:20;
+}
+
+.window.open{
+    transform:translate(-50%,-50%) scale(1);
+    opacity:1;
+    pointer-events:auto;
+}
+
+.window-header{
+    height:59px;
+    padding:0 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.025);
+}
+
+.window-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.window-icon{
+    width:30px;
+    height:30px;
+    border-radius:9px;
+    display:grid;
+    place-items:center;
+    background:rgba(255,255,255,.08);
+}
+
+.window-close{
+    width:31px;
+    height:31px;
+    border-radius:9px;
+    background:rgba(255,255,255,.06);
+    color:#ddd;
+}
+
+.window-close:hover{
+    background:rgba(255,70,90,.25);
+}
+
+.window-body{
+    padding:25px;
+    overflow:auto;
+    max-height:calc(min(760px,100vh - 159px));
+}
+
+.window-body::-webkit-scrollbar{
+    width:5px;
+}
+
+.window-body::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.13);
+    border-radius:10px;
+}
+
+/* =========================
+   NOTATKI
+========================= */
+
+.note-paper{
+    padding:34px;
+    border-radius:20px;
+    background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.035));
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.note-paper .small{
+    color:#9e9eaa;
+    font-size:12px;
+    margin-bottom:17px;
+}
+
+.note-paper h2{
+    font-size:27px;
+    margin-bottom:20px;
+}
+
+.note-paper p{
+    color:#d8d8de;
+    font-size:15px;
+    line-height:1.9;
+}
+
+.note-heart{
+    margin-top:25px;
+    font-size:30px;
+}
+
+/* =========================
+   MUZYKA
+========================= */
+
+.music-card{
+    text-align:center;
+    padding:12px 0 5px;
+}
+
+.album{
+    width:190px;
+    height:190px;
+    margin:0 auto 25px;
+    border-radius:28px;
+    display:grid;
+    place-items:center;
+    font-size:70px;
+    background:
+        radial-gradient(circle at 30% 25%,rgba(255,255,255,.25),transparent 25%),
+        linear-gradient(145deg,#3d2431,#17131c);
+    box-shadow:0 25px 70px rgba(0,0,0,.4);
+}
+
+.music-card h2{
+    font-size:21px;
+}
+
+.music-card p{
+    margin-top:7px;
+    color:#9999a6;
+    font-size:13px;
+}
+
+.music-controls{
+    margin-top:27px;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+}
+
+.music-btn{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:rgba(255,255,255,.09);
+    color:white;
+    font-size:18px;
+}
+
+.music-btn.main{
+    width:58px;
+    height:58px;
+    background:linear-gradient(135deg,#ff668d,#a766ff);
+}
+
+/* =========================
+   WIADOMOŚCI
+========================= */
+
+.messages{
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+    min-height:260px;
+}
+
+.message{
+    max-width:78%;
+    padding:13px 16px;
+    border-radius:19px 19px 19px 5px;
+    background:rgba(255,255,255,.075);
+    border:1px solid rgba(255,255,255,.07);
+    color:#ededf2;
+    font-size:14px;
+    line-height:1.5;
+    animation:messageIn .45s cubic-bezier(.16,1,.3,1);
+}
+
+@keyframes messageIn{
+    from{
+        opacity:0;
+        transform:translateY(10px) scale(.97);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.typing{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    width:max-content;
+    padding:13px 16px;
+    border-radius:19px 19px 19px 5px;
+    background:rgba(255,255,255,.075);
+}
+
+.typing span{
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#a8a8b0;
+    animation:typing .9s infinite;
+}
+
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+
+@keyframes typing{
+    0%,60%,100%{
+        transform:translateY(0);
+        opacity:.45;
+    }
+
+    30%{
+        transform:translateY(-4px);
+        opacity:1;
+    }
+}
+
+/* =========================
+   GALERIA
+========================= */
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+.gallery-card{
+    min-height:180px;
+    border-radius:20px;
+    padding:20px;
+    display:flex;
+    align-items:flex-end;
+    background:
+        radial-gradient(circle at 25% 20%,rgba(255,255,255,.22),transparent 25%),
+        linear-gradient(145deg,#30202a,#17151d);
+    border:1px solid rgba(255,255,255,.08);
+    font-size:14px;
+    font-weight:600;
+}
+
+/* =========================
+   WSPOMNIENIA
+========================= */
+
+.memory-list{
+    display:grid;
+    gap:12px;
+}
+
+.memory{
+    padding:20px;
+    border-radius:18px;
+    background:rgba(255,255,255,.055);
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.memory strong{
+    display:block;
+    font-size:15px;
+}
+
+.memory span{
+    display:block;
+    margin-top:7px;
+    color:#a5a5af;
+    font-size:13px;
+    line-height:1.5;
+}
+
+/* =========================
+   DLA CIEBIE
+========================= */
+
+.big-heart{
+    text-align:center;
+    padding:30px 10px;
+}
+
+.big-heart .heart{
+    font-size:75px;
+    filter:drop-shadow(0 15px 30px rgba(255,60,110,.25));
+    animation:heartBeat 1.8s ease-in-out infinite;
+}
+
+@keyframes heartBeat{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.08)}
+}
+
+.big-heart h2{
+    margin-top:20px;
+    font-size:28px;
+}
+
+.big-heart p{
+    margin:12px auto 0;
+    max-width:500px;
+    color:#aaaab5;
+    line-height:1.7;
+}
+
+/* =========================
+   ZEGAR
+========================= */
+
+.clock-large{
+    text-align:center;
+    padding:35px 10px 45px;
+}
+
+.clock-large .heart{
+    font-size:75px;
+    display:inline-block;
+    filter:drop-shadow(0 15px 30px rgba(255,60,110,.25));
+    animation:heartBeat 1.8s ease-in-out infinite;
+}
+
+.clock-large h2{
+    margin-top:22px;
+    font-size:32px;
+    font-weight:650;
+    letter-spacing:-1px;
+}
+
+.clock-message{
+    margin:13px auto 0;
+    max-width:420px;
+    color:#9999a5;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.clock-number{
+    margin-top:32px;
+    font-size:18px;
+    color:#777783;
+    letter-spacing:0;
+}
+
+.clock-line{
+    width:80px;
+    height:1px;
+    margin:25px auto 0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+}
+
+/* =========================
+   GRA
+========================= */
+
+.game{
+    text-align:center;
+}
+
+.game-box{
+    width:190px;
+    height:190px;
+    margin:25px auto;
+    border-radius:30px;
+    display:grid;
+    place-items:center;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.09);
+}
+
+.game-box button{
+    padding:15px 24px;
+    border-radius:14px;
+    color:white;
+    background:linear-gradient(135deg,#ff668d,#a766ff);
+    font-weight:700;
+}
+
+.game-result{
+    min-height:25px;
+    color:#bbb;
+}
+
+/* =========================
+   REVEAL
+========================= */
+
+#reveal{
+    position:fixed;
+    inset:0;
+    z-index:200;
+    pointer-events:none;
+    opacity:0;
+}
+
+#reveal.active{
+    animation:revealScreen 2.2s ease forwards;
+}
+
+.reveal-flash{
+    position:absolute;
+    inset:0;
+    background:white;
+    opacity:0;
+}
+
+#reveal.active .reveal-flash{
+    animation:flash .9s ease .25s forwards;
+}
+
+.reveal-circle{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:40px;
+    height:40px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:white;
+    box-shadow:
+        0 0 80px 30px rgba(255,255,255,.8),
+        0 0 180px 80px rgba(255,105,150,.45);
+}
+
+#reveal.active .reveal-circle{
+    animation:circleReveal 1.5s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+@keyframes flash{
+    0%{opacity:0}
+    30%{opacity:.95}
+    100%{opacity:0}
+}
+
+@keyframes circleReveal{
+    from{
+        width:40px;
+        height:40px;
+        opacity:1;
+    }
+
+    to{
+        width:300vmax;
+        height:300vmax;
+        opacity:0;
+    }
+}
+
+@keyframes revealScreen{
+    0%{opacity:1}
+    85%{opacity:1}
+    100%{opacity:0}
+}
+
+/* =========================
+   PARTICLE
+========================= */
+
+.particle{
+    position:fixed;
+    z-index:205;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:white;
+    pointer-events:none;
+    box-shadow:0 0 15px rgba(255,255,255,.9);
+    animation:particleFly 1.7s cubic-bezier(.15,.8,.25,1) forwards;
+}
+
+@keyframes particleFly{
+    to{
+        transform:translate(var(--x),var(--y)) scale(0);
+        opacity:0;
+    }
+}
+
+/* =========================
+   TASKBAR
+========================= */
+
+.taskbar{
+    position:absolute;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%);
+    z-index:10;
+    padding:8px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:18px;
+    background:rgba(15,15,21,.7);
+    backdrop-filter:blur(25px);
+    box-shadow:0 15px 45px rgba(0,0,0,.35);
+}
+
+.task-item{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    color:white;
+    background:rgba(255,255,255,.055);
+    font-size:18px;
+}
+
+/* =========================
+   YOUTUBE
+========================= */
+
+#youtubePlayer{
+    position:fixed;
+    width:1px;
+    height:1px;
+    left:-100px;
+    bottom:-100px;
+    opacity:0;
+    pointer-events:none;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:650px){
+
+    .lock-content{
+        padding-top:13vh;
+    }
+
+    .lock-message{
+        margin-bottom:9vh;
+    }
+
+    .login-card{
+        padding:27px 21px;
+        border-radius:25px;
+    }
+
+    .riddles{
+        display:none;
+    }
+
+    .apps{
+        left:16px;
+        top:25px;
+        grid-template-columns:repeat(2,75px);
+        gap:22px 12px;
+    }
+
+    .app{
+        width:75px;
+    }
+
+    .app-button{
+        width:57px;
+        height:57px;
+        border-radius:17px;
+        font-size:24px;
+    }
+
+    .desktop-clock{
+        right:18px;
+        top:20px;
+    }
+
+    .desktop-clock .time{
+        font-size:23px;
+    }
+
+    .desktop-clock .date{
+        font-size:11px;
+    }
+
+    .window{
+        width:calc(100% - 20px);
+        max-height:calc(100% - 90px);
+        border-radius:22px;
+    }
+
+    .window-body{
+        padding:17px;
+    }
+
+    .note-paper{
+        padding:22px;
+    }
+
+    .note-paper h2{
+        font-size:23px;
+    }
+
+    .note-paper p{
+        font-size:14px;
+        line-height:1.75;
+    }
+
+    .gallery{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-card{
+        min-height:130px;
+    }
+
+    .clock-large h2{
+        font-size:26px;
+    }
+
+    .taskbar{
+        bottom:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     EKRAN BLOKADY
+========================= -->
+
+<section id="lockScreen">
+
+    <div class="lock-overlay"></div>
+
+    <div class="lock-content">
+
+        <div class="lock-time" id="lockTime">00:00</div>
+
+        <div class="lock-date" id="lockDate">
+            Ładowanie...
+        </div>
+
+        <div class="lock-message" onclick="openLogin()">
+
+            <div class="lock-icon">
+                🔒
+            </div>
+
+            <strong>
+                Dotknij, aby odblokować
+            </strong>
+
+            <span>
+                Jest tu coś przygotowanego specjalnie dla Ciebie
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     LOGOWANIE
+========================= -->
+
+<section id="loginScreen">
+
+    <div class="login-card">
+
+        <div class="login-avatar">
+            ❤️
+        </div>
+
+        <h1>Witaj</h1>
+
+        <div class="sub">
+            Zanim wejdziesz, musisz znać hasło
+        </div>
+
+        <div class="riddles">
+
+            <div class="riddle">
+                🔐 Małe słowo, które otworzy wszystko
+            </div>
+
+            <div class="riddle">
+                💭 Znajdziesz je tam, gdzie już je znasz
+            </div>
+
+            <div class="riddle">
+                🐻 Zaczyna się na „t”
+            </div>
+
+            <div class="riddle">
+                ❤️ Resztę chyba już znasz
+            </div>
+
+        </div>
+
+        <div class="password-wrap">
+
+            <input
+                id="password"
+                type="password"
+                placeholder="Wpisz hasło..."
+                autocomplete="off"
+                onkeydown="if(event.key==='Enter')login()"
+            >
+
+            <button onclick="togglePassword()">
+                👁
+            </button>
+
+        </div>
+
+        <button class="login-button" onclick="login()">
+            Odblokuj
+        </button>
+
+        <div class="login-error" id="loginError"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     DESKTOP
+========================= -->
+
+<section id="desktop">
+
+    <div class="desktop-noise"></div>
+    <div class="desktop-glow"></div>
+
+    <div class="desktop-clock">
+
+        <div class="time" id="desktopTime">
+            00:00
+        </div>
+
+        <div class="date" id="desktopDate">
+            ...
+        </div>
+
+    </div>
+
+
+    <!-- APLIKACJE -->
+
+    <div class="apps">
+
+        <div class="app" id="notesIcon">
+
+            <button
+                class="app-button"
+                onclick="openWindow('notesWindow')"
+            >
+                📝
+            </button>
+
+            <div class="app-name">
+                Notatki
+            </div>
+
+        </div>
+
+
+        <div class="app" id="musicIcon">
+
+            <button
+                class="app-button"
+                onclick="openWindow('musicWindow')"
+            >
+                🎵
+            </button>
+
+            <div class="app-name">
+                Muzyka
+            </div>
+
+        </div>
+
+
+        <div class="app" id="messagesIcon">
+
+            <button
+                class="app-button"
+                onclick="openMessages()"
+            >
+                💬
+            </button>
+
+            <div class="app-name">
+                Wiadomości
+            </div>
+
+        </div>
+
+
+        <div class="app" id="galleryIcon">
+
+            <button
+                class="app-button"
+                onclick="openWindow('galleryWindow')"
+            >
+                🖼️
+            </button>
+
+            <div class="app-name">
+                Galeria
+            </div>
+
+        </div>
+
+
+        <div class="app" id="memoryIcon">
+
+            <button
+                class="app-button"
+                onclick="openWindow('memoryWindow')"
+            >
+                💝
+            </button>
+
+            <div class="app-name">
+                Wspomnienia
+            </div>
+
+        </div>
+
+
+        <div class="app" id="forYouIcon">
+
+            <button
+                class="app-button"
+                onclick="openWindow('forYouWindow')"
+            >
+                ❤️
+            </button>
+
+            <div class="app-name">
+                Dla Ciebie
+            </div>
+
+        </div>
+
+
+        <div class="app" id="clockIcon">
+
+            <button
+                class="app-button"
+                onclick="openWindow('clockWindow')"
+            >
+                🕐
+            </button>
+
+            <div class="app-name">
+                Zegar
+            </div>
+
+        </div>
+
+
+        <div class="app" id="gameIcon">
+
+            <button
+                class="app-button"
+                onclick="openWindow('gameWindow')"
+            >
+                🎮
+            </button>
+
+            <div class="app-name">
+                Gry
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         NOTATKI
+    ========================= -->
+
+    <div class="window" id="notesWindow">
+
+        <div class="window-header">
+
+            <div class="window-title">
+
+                <div class="window-icon">
+                    📝
+                </div>
+
+                Notatki
+
+            </div>
+
+            <button
+                class="window-close"
+                onclick="closeNotes()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="window-body">
+
+            <div class="note-paper">
+
+                <div class="small">
+                    Notatka zapisana wcześniej
+                </div>
+
+                <h2>
+                    Jeżeli tu dotarłaś...
+                </h2>
+
+                <p>
+                    Jeżeli tu dotarłaś, oznacza to, że udało Ci się przejść przez cały mały system.
+                    Chciałem zrobić coś trochę innego niż zwykła wiadomość.
+                    Każde okienko jest małą częścią tej niespodzianki.
+                    Dziękuję Ci za wszystkie rozmowy, śmiech i wspólne chwile.
+                    Mam nadzieję, że przed nami będzie ich jeszcze bardzo dużo ❤️
+                </p>
+
+                <div class="note-heart">
+                    ❤️
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MUZYKA
+    ========================= -->
+
+    <div class="window" id="musicWindow">
+
+        <div class="window-header">
+
+            <div class="window-title">
+
+                <div class="window-icon">
+                    🎵
+                </div>
+
+                Muzyka
+
+            </div>
+
+            <button
+                class="window-close"
+                onclick="closeWindow('musicWindow')"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="window-body">
+
+            <div class="music-card">
+
+                <div class="album">
+                    🎧
+                </div>
+
+                <h2>
+                    Intro
+                </h2>
+
+                <p>
+                    Major SPZ · prod. Shimz
+                </p>
+
+                <div class="music-controls">
+
+                    <button
+                        class="music-btn"
+                        onclick="restartMusic()"
+                    >
+                        ↺
+                    </button>
+
+                    <button
+                        class="music-btn main"
+                        id="musicPlayButton"
+                        onclick="toggleMusic()"
+                    >
+                        ▶
+                    </button>
+
+                    <button
+                        class="music-btn"
+                        onclick="stopMusic()"
+                    >
+                        ■
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         WIADOMOŚCI
+    ========================= -->
+
+    <div class="window" id="messagesWindow">
+
+        <div class="window-header">
+
+            <div class="window-title">
+
+                <div class="window-icon">
+                    💬
+                </div>
+
+                Wiadomości
+
+            </div>
+
+            <button
+                class="window-close"
+                onclick="closeMessages()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="window-body">
+
+            <div
+                class="messages"
+                id="messages"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         GALERIA
+    ========================= -->
+
+    <div class="window" id="galleryWindow">
+
+        <div class="window-header">
+
+            <div class="window-title">
+
+                <div class="window-icon">
+                    🖼️
+                </div>
+
+                Galeria
+
+            </div>
+
+            <button
+                class="window-close"
+                onclick="closeWindow('galleryWindow')"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="window-body">
+
+            <div class="gallery">
+
+                <div class="gallery-card">
+                    📸 Chwile, które warto pamiętać
+                </div>
+
+                <div class="gallery-card">
+                    🌙 Wieczorne rozmowy
+                </div>
+
+                <div class="gallery-card">
+                    ☕ Małe momenty
+                </div>
+
+                <div class="gallery-card">
+                    ❤️ Te najważniejsze
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         WSPOMNIENIA
+    ========================= -->
+
+    <div class="window" id="memoryWindow">
+
+        <div class="window-header">
+
+            <div class="window-title">
+
+                <div class="window-icon">
+                    💝
+                </div>
+
+                Wspomnienia
+
+            </div>
+
+            <button
+                class="window-close"
+                onclick="closeWindow('memoryWindow')"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="window-body">
+
+            <div class="memory-list">
+
+                <div class="memory">
+
+                    <strong>
+                        💬 Wszystkie rozmowy
+                    </strong>
+
+                    <span>
+                        Nawet zwykła rozmowa potrafiła stać się czymś,
+                        co chciało się zapamiętać.
+                    </span>
+
+                </div>
+
+
+                <div class="memory">
+
+                    <strong>
+                        😂 Wszystkie śmiechy
+                    </strong>
+
+                    <span>
+                        Tych chyba nie da się policzyć.
+                    </span>
+
+                </div>
+
+
+                <div class="memory">
+
+                    <strong>
+                        🌙 Wspólne chwile
+                    </strong>
+
+                    <span>
+                        Małe momenty, które z czasem okazują się tymi najważniejszymi.
+                    </span>
+
+                </div>
+
+
+                <div class="memory">
+
+                    <strong>
+                        ❤️ I wszystko przed nami
+                    </strong>
+
+                    <span>
+                        Najlepsze jest to, że ta lista może być jeszcze dużo dłuższa.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         DLA CIEBIE
+    ========================= -->
+
+    <div class="window" id="forYouWindow">
+
+        <div class="window-header">
+
+            <div class="window-title">
+
+                <div class="window-icon">
+                    ❤️
+                </div>
+
+                Dla Ciebie
+
+            </div>
+
+            <button
+                class="window-close"
+                onclick="closeWindow('forYouWindow')"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="window-body">
+
+            <div class="big-heart">
+
+                <div class="heart">
+                    ❤️
+                </div>
+
+                <h2>
+                    Dla Ciebie
+                </h2>
+
+                <p>
+                    Ta mała strona powstała tylko po to,
+                    żeby powiedzieć Ci coś, czego czasami
+                    trudno powiedzieć zwykłą wiadomością.
+                </p>
+
+                <p
+                    style="
+                        margin-top:18px;
+                        color:#fff;
+                        font-weight:600;
+                    "
+                >
+                    Jesteś dla mnie naprawdę wyjątkowa.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ZEGAR
+    ========================= -->
+
+    <div class="window" id="clockWindow">
+
+        <div class="window-header">
+
+            <div class="window-title">
+
+                <div class="window-icon">
+                    🕐
+                </div>
+
+                Zegar
+
+            </div>
+
+            <button
+                class="window-close"
+                onclick="closeWindow('clockWindow')"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="window-body">
+
+            <div class="clock-large">
+
+                <div class="heart">
+                    ❤️
+                </div>
+
+                <h2>
+                    Z Tobą nie liczę czasu
+                </h2>
+
+                <div class="clock-message">
+                    Bo każda chwila z Tobą jest wyjątkowa
+                </div>
+
+                <div
+                    class="clock-number"
+                    id="bigClock"
+                >
+                    00:00:00
+                </div>
+
+                <div class="clock-line"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         GRY
+    ========================= -->
+
+    <div class="window" id="gameWindow">
+
+        <div class="window-header">
+
+            <div class="window-title">
+
+                <div class="window-icon">
+                    🎮
+                </div>
+
+                Gry
+
+            </div>
+
+            <button
+                class="window-close"
+                onclick="closeWindow('gameWindow')"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="window-body">
+
+            <div class="game">
+
+                <h2>
+                    Mała gra ❤️
+                </h2>
+
+                <p
+                    style="
+                        margin-top:8px;
+                        color:#999;
+                    "
+                >
+                    Kliknij przycisk i zobacz co się stanie
+                </p>
+
+                <div class="game-box">
+
+                    <button onclick="playGame()">
+                        Kliknij ❤️
+                    </button>
+
+                </div>
+
+                <div
+                    class="game-result"
+                    id="gameResult"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TASKBAR
+    ========================= -->
+
+    <div class="taskbar">
+
+        <button
+            class="task-item"
+            onclick="openWindow('notesWindow')"
+        >
+            📝
+        </button>
+
+        <button
+            class="task-item"
+            onclick="openWindow('musicWindow')"
+        >
+            🎵
+        </button>
+
+        <button
+            class="task-item"
+            onclick="openMessages()"
+        >
+            💬
+        </button>
+
+        <button
+            class="task-item"
+            onclick="openWindow('forYouWindow')"
+        >
+            ❤️
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     REVEAL
+========================= -->
+
+<div id="reveal">
+
+    <div class="reveal-flash"></div>
+
+    <div class="reveal-circle"></div>
+
+</div>
+
+
+<!-- =========================
+     YOUTUBE
+========================= -->
+
+<div id="youtubePlayer"></div>
+
+<audio
+    id="sendSound"
+    preload="auto"
+    src="send.mp3"
+></audio>
+
+
+<script>
+
+/* =========================
+   USTAWIENIA
+========================= */
+
+const PASSWORD = "tobiasz";
+
+const songId = "f4nZvuprcEk";
+
+let notesOpened = false;
+let notesFinished = false;
+
+let messagesStarted = false;
+let messagesCancelled = false;
+
+let messageTimers = [];
+
+let audioContext = null;
+
+let youtubePlayer = null;
+let youtubeReady = false;
+
+
+/* =========================
+   ZEGAR
+========================= */
+
+function updateClocks(){
+
+    const now = new Date();
+
+    const time =
+        now.toLocaleTimeString("pl-PL",{
+            hour:"2-digit",
+            minute:"2-digit"
+        });
+
+    const fullTime =
+        now.toLocaleTimeString("pl-PL",{
+            hour:"2-digit",
+            minute:"2-digit",
+            second:"2-digit"
+        });
+
+    const date =
+        now.toLocaleDateString("pl-PL",{
+            weekday:"long",
+            day:"numeric",
+            month:"long"
+        });
+
+    document.getElementById("lockTime").textContent =
+        time;
+
+    document.getElementById("lockDate").textContent =
+        date;
+
+    document.getElementById("desktopTime").textContent =
+        time;
+
+    document.getElementById("desktopDate").textContent =
+        date;
+
+    document.getElementById("bigClock").textContent =
+        fullTime;
+}
+
+updateClocks();
+
+setInterval(updateClocks,1000);
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function openLogin(){
+
+    document
+        .getElementById("lockScreen")
+        .classList.add("hide");
+
+    setTimeout(()=>{
+
+        document
+            .getElementById("loginScreen")
+            .classList.add("show");
+
+    },500);
+}
+
+
+function togglePassword(){
+
+    const input =
+        document.getElementById("password");
+
+    input.type =
+        input.type === "password"
+        ? "text"
+        : "password";
+}
+
+
+function login(){
+
+    const input =
+        document.getElementById("password");
+
+    const error =
+        document.getElementById("loginError");
+
+    if(input.value.trim() !== PASSWORD){
+
+        error.textContent =
+            "To nie jest właściwe hasło ❤️";
+
+        input.animate(
+            [
+                {transform:"translateX(0)"},
+                {transform:"translateX(-7px)"},
+                {transform:"translateX(7px)"},
+                {transform:"translateX(0)"}
+            ],
+            {
+                duration:300
+            }
+        );
+
+        return;
+    }
+
+    error.textContent = "";
+
+    document
+        .getElementById("loginScreen")
+        .classList.remove("show");
+
+    setTimeout(()=>{
+
+        document
+            .getElementById("desktop")
+            .classList.add("show");
+
+        setTimeout(()=>{
+            revealOnlyNotes();
+        },700);
+
+    },500);
+}
+
+
+/* =========================
+   NOTATKI NA START
+========================= */
+
+function revealOnlyNotes(){
+
+    const notesIcon =
+        document.getElementById("notesIcon");
+
+    notesIcon.classList.add("visible");
+
+    setTimeout(()=>{
+
+        if(notesOpened) return;
+
+        notesOpened = true;
+
+        openWindow("notesWindow");
+
+        setTimeout(()=>{
+            closeNotes();
+        },7000);
+
+    },600);
+}
+
+
+/* =========================
+   ZAMYKANIE NOTATKI
+========================= */
+
+function closeNotes(){
+
+    if(notesFinished) return;
+
+    notesFinished = true;
+
+    closeWindow("notesWindow");
+
+    setTimeout(()=>{
+        playReveal();
+    },500);
+}
+
+
+/* =========================
+   REVEAL
+========================= */
+
+function playReveal(){
+
+    const reveal =
+        document.getElementById("reveal");
+
+    reveal.classList.add("active");
+
+    createParticles();
+
+    setTimeout(()=>{
+        revealDesktopApps();
+    },1300);
+
+    setTimeout(()=>{
+        reveal.classList.remove("active");
+    },2300);
+}
+
+
+function createParticles(){
+
+    const amount =
+        window.innerWidth < 600
+        ? 35
+        : 65;
+
+    for(let i=0;i<amount;i++){
+
+        const particle =
+            document.createElement("div");
+
+        particle.className =
+            "particle";
+
+        particle.style.left = "50%";
+        particle.style.top = "50%";
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            180 +
+            Math.random() *
+            Math.max(
+                window.innerWidth,
+                window.innerHeight
+            ) * .7;
+
+        particle.style.setProperty(
+            "--x",
+            Math.cos(angle) * distance + "px"
+        );
+
+        particle.style.setProperty(
+            "--y",
+            Math.sin(angle) * distance + "px"
+        );
+
+        particle.style.animationDelay =
+            Math.random() * .35 + "s";
+
+        document.body.appendChild(particle);
+
+        setTimeout(()=>{
+            particle.remove();
+        },2200);
+    }
+}
+
+
+/* =========================
+   APLIKACJE PO KOLEI
+========================= */
+
+function revealDesktopApps(){
+
+    const apps = [
+        "musicIcon",
+        "messagesIcon",
+        "galleryIcon",
+        "memoryIcon",
+        "forYouIcon",
+        "clockIcon",
+        "gameIcon"
+    ];
+
+    apps.forEach((id,index)=>{
+
+        setTimeout(()=>{
+
+            document
+                .getElementById(id)
+                .classList.add("visible");
+
+        },index * 330);
+
+    });
+}
+
+
+/* =========================
+   OKNA
+========================= */
+
+function openWindow(id){
+
+    document
+        .querySelectorAll(".window")
+        .forEach(window=>{
+
+            if(window.id !== id){
+                window.classList.remove("open");
+            }
+
+        });
+
+    document
+        .getElementById(id)
+        .classList.add("open");
+}
+
+
+function closeWindow(id){
+
+    document
+        .getElementById(id)
+        .classList.remove("open");
+}
+
+
+/* =========================
+   WIADOMOŚCI
+========================= */
+
+const messages = [
+
+    "Widzę, że znalazłaś... ❤️",
+
+    "No i jesteśmy.",
+
+    "Wiesz co?",
+
+    "Chciałem Ci powiedzieć coś ważnego.",
+
+    "Bardzo dużo dla mnie znaczysz. ❤️",
+
+    "Dziękuję Ci za wszystkie rozmowy i wspólne chwile.",
+
+    "Mam nadzieję, że takich chwil będzie jeszcze naprawdę dużo.",
+
+    "I pamiętaj...",
+
+    "Bardzo Cię kocham. ❤️"
+
+];
+
+
+function openMessages(){
+
+    openWindow("messagesWindow");
+
+    if(messagesCancelled) return;
+
+    if(messagesStarted) return;
+
+    messagesStarted = true;
+
+    startMessages();
+}
+
+
+function startMessages(){
+
+    const container =
+        document.getElementById("messages");
+
+    container.innerHTML = "";
+
+    let delay = 600;
+
+    messages.forEach((message,index)=>{
+
+        const typingDelay = 1500;
+
+        const typingTimer =
+            setTimeout(()=>{
+
+                if(messagesCancelled) return;
+
+                const typing =
+                    document.createElement("div");
+
+                typing.className =
+                    "typing";
+
+                typing.id =
+                    "typing-" + index;
+
+                typing.innerHTML = `
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                `;
+
+                container.appendChild(typing);
+
+                container.scrollTop =
+                    container.scrollHeight;
+
+            },delay);
+
+        messageTimers.push(typingTimer);
+
+
+        const sendTimer =
+            setTimeout(()=>{
+
+                if(messagesCancelled) return;
+
+                const typing =
+                    document.getElementById(
+                        "typing-" + index
+                    );
+
+                if(typing){
+                    typing.remove();
+                }
+
+                const bubble =
+                    document.createElement("div");
+
+                bubble.className =
+                    "message";
+
+                bubble.textContent =
+                    message;
+
+                container.appendChild(bubble);
+
+                sendMessageSound();
+
+                container.scrollTop =
+                    container.scrollHeight;
+
+            },delay + typingDelay);
+
+        messageTimers.push(sendTimer);
+
+        delay += typingDelay + 1700;
+
+    });
+}
+
+
+function closeMessages(){
+
+    document
+        .getElementById("messagesWindow")
+        .classList.remove("open");
+
+    messagesCancelled = true;
+
+    messageTimers.forEach(timer=>{
+        clearTimeout(timer);
+    });
+
+    messageTimers = [];
+
+    document
+        .querySelectorAll(".typing")
+        .forEach(el=>el.remove());
+}
+
+
+/* =========================
+   DŹWIĘK WIADOMOŚCI
+========================= */
+
+function sendMessageSound(){
+
+    const audio =
+        document.getElementById("sendSound");
+
+    if(audio){
+
+        audio.currentTime = 0;
+
+        const promise =
+            audio.play();
+
+        if(promise){
+
+            promise.catch(()=>{
+                fallbackSendSound();
+            });
+
+        }
+
+        return;
+    }
+
+    fallbackSendSound();
+}
+
+
+function fallbackSendSound(){
+
+    try{
+
+        if(!audioContext){
+
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+        if(audioContext.state === "suspended"){
+            audioContext.resume();
+        }
+
+        const now =
+            audioContext.currentTime;
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+        oscillator.type = "sine";
+
+        oscillator.frequency.setValueAtTime(
+            720,
+            now
+        );
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+            1050,
+            now + .08
+        );
+
+        gain.gain.setValueAtTime(
+            .0001,
+            now
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .07,
+            now + .015
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            now + .20
+        );
+
+        oscillator.connect(gain);
+
+        gain.connect(
+            audioContext.destination
+        );
+
+        oscillator.start(now);
+
+        oscillator.stop(now + .21);
+
+    }catch(e){
+
+        console.log("Dźwięk niedostępny");
+
+    }
+}
+
+
+/* =========================
+   YOUTUBE
+========================= */
+
+function onYouTubeIframeAPIReady(){
+
+    youtubePlayer =
+        new YT.Player(
+            "youtubePlayer",
+            {
+
+                height:"1",
+                width:"1",
+
+                videoId:songId,
+
+                playerVars:{
+                    autoplay:0,
+                    controls:0,
+                    loop:1,
+                    playlist:songId,
+                    playsinline:1
+                },
+
+                events:{
+                    onReady:function(){
+                        youtubeReady = true;
+                    }
+                }
+
+            }
+        );
+}
+
+
+function toggleMusic(){
+
+    if(!youtubeReady){
+
+        alert(
+            "Muzyka jeszcze się ładuje. Spróbuj za chwilę."
+        );
+
+        return;
+    }
+
+    const state =
+        youtubePlayer.getPlayerState();
+
+    const button =
+        document.getElementById(
+            "musicPlayButton"
+        );
+
+    if(state === YT.PlayerState.PLAYING){
+
+        youtubePlayer.pauseVideo();
+
+        button.textContent = "▶";
+
+    }else{
+
+        youtubePlayer.playVideo();
+
+        button.textContent = "Ⅱ";
+
+    }
+}
+
+
+function restartMusic(){
+
+    if(!youtubeReady) return;
+
+    youtubePlayer.seekTo(0,true);
+
+    youtubePlayer.playVideo();
+
+    document.getElementById(
+        "musicPlayButton"
+    ).textContent = "Ⅱ";
+}
+
+
+function stopMusic(){
+
+    if(!youtubeReady) return;
+
+    youtubePlayer.stopVideo();
+
+    document.getElementById(
+        "musicPlayButton"
+    ).textContent = "▶";
+}
+
+
+/* =========================
+   GRA
+========================= */
+
+function playGame(){
+
+    const results = [
+
+        "❤️ Wygrałaś moje serce.",
+
+        "✨ Odpowiedź była chyba oczywista.",
+
+        "🥰 No dobra... jesteś niesamowita.",
+
+        "💗 Nagroda: jeszcze jeden uśmiech.",
+
+        "🌙 Ta gra ma tylko jeden dobry wynik."
+
+    ];
+
+    const result =
+        results[
+            Math.floor(
+                Math.random() * results.length
+            )
+        ];
+
+    document.getElementById(
+        "gameResult"
+    ).textContent = result;
+}
+
+
+/* =========================
+   YOUTUBE API
+========================= */
+
+const youtubeScript =
+    document.createElement("script");
+
+youtubeScript.src =
+    "https://www.youtube.com/iframe_api";
+
+document.head.appendChild(youtubeScript);
+
+
+/* =========================
+   ESC
+========================= */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(event.key === "Escape"){
+
+            document
+                .querySelectorAll(".window")
+                .forEach(window=>{
+                    window.classList.remove("open");
+                });
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
